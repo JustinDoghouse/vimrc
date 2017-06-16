@@ -265,8 +265,8 @@ nmap <CR> o<Esc>
 imap <S-Enter> <C-o>O
 
 " move cursor in insert mode
-imap jj <Down> 
-imap kk <Up>
+inoremap jj <Esc>j 
+inoremap kk <Esc>k
 
 """"""""""""""""""""""""""""""
 " => Status line
