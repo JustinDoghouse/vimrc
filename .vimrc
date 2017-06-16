@@ -1,26 +1,12 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
+"
+" Author:
+"       phycept
+"       phycept@gmail.com
+"
+" Copied_from: 
 "       Amir Salihefendic
 "       http://amix.dk - amix@amix.dk
-"
-" Version: 
-"       5.0 - 29/05/12 15:43:36
-"
-" Blog_post: 
-"       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
-"
-" Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
-"
-"       Install the awesome version from:
-"
-"           https://github.com/amix/vimrc
-"
-" Syntax_highlighted:
-"       http://amix.dk/vim/vimrc.html
-"
-" Raw_version: 
-"       http://amix.dk/vim/vimrc.txt
 "
 " Sections:
 "    -> General
@@ -270,6 +256,17 @@ endtry
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
+" insert a new-line after the current line by pressing Enter (Shift-Enter for inserting a line before the current line)
+" http://vim.wikia.com/wiki/Insert_newline_without_entering_insert_mode 
+nmap <S-Enter> O<Esc>
+nmap <CR> o<Esc>
+
+" new line for insert model
+imap <S-Enter> <C-o>O
+
+" move cursor in insert mode
+imap jj <Down> 
+imap kk <Up>
 
 """"""""""""""""""""""""""""""
 " => Status line
