@@ -258,11 +258,11 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " insert a new-line after the current line by pressing Enter (Shift-Enter for inserting a line before the current line)
 " http://vim.wikia.com/wiki/Insert_newline_without_entering_insert_mode 
-nmap <S-Enter> O<Esc>
-nmap <CR> o<Esc>
+nmap <S-Enter> o<Esc>
+" nmap <CR> o<Esc>
 
 " new line for insert model
-imap <S-Enter> <C-o>O
+imap <S-Enter> <C-o>o
 
 " move cursor in insert mode
 inoremap jj <Esc>j 
