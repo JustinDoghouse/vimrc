@@ -268,6 +268,11 @@ imap <S-Enter> <C-o>o
 inoremap jj <Esc>j 
 inoremap kk <Esc>k
 
+" map shell short cut
+inoremap <C-w> <C-o>db
+inoremap <C-f> <C-o>l
+inoremap <C-b> <C-o>h
+
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
