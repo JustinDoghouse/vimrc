@@ -192,6 +192,12 @@ set ai "Auto indent
 set cindent "
 set wrap "Wrap lines
 
+<<<<<<< HEAD
+=======
+" Split panes to right
+set splitright
+
+>>>>>>> 566175b91a85ae2181674ad92775476f56cd4a18
 """"""""""""""""""""""""""""""
 " => Visual mode related
 """"""""""""""""""""""""""""""
@@ -258,15 +264,21 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " insert a new-line after the current line by pressing Enter (Shift-Enter for inserting a line before the current line)
 " http://vim.wikia.com/wiki/Insert_newline_without_entering_insert_mode 
-nmap <S-Enter> O<Esc>
-nmap <CR> o<Esc>
+nmap <S-Enter> o<Esc>
+" nmap <CR> o<Esc>
 
 " new line for insert model
-imap <S-Enter> <C-o>O
+imap <S-Enter> <C-o>o
+imap <C-S-Enter> <C-o>O
 
 " move cursor in insert mode
 inoremap jj <Esc>j 
 inoremap kk <Esc>k
+
+" map shell short cut
+inoremap <C-w> <C-o>db
+inoremap <C-f> <C-o>l
+inoremap <C-b> <C-o>h
 
 """"""""""""""""""""""""""""""
 " => Status line
