@@ -191,6 +191,8 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+" Split panes to right
+set splitright
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -263,6 +265,7 @@ nmap <S-Enter> o<Esc>
 
 " new line for insert model
 imap <S-Enter> <C-o>o
+imap <C-S-Enter> <C-o>O
 
 " move cursor in insert mode
 inoremap jj <Esc>j 
