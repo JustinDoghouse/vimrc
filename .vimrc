@@ -192,12 +192,9 @@ set ai "Auto indent
 set cindent "
 set wrap "Wrap lines
 
-<<<<<<< HEAD
-=======
 " Split panes to right
 set splitright
 
->>>>>>> 566175b91a85ae2181674ad92775476f56cd4a18
 """"""""""""""""""""""""""""""
 " => Visual mode related
 """"""""""""""""""""""""""""""
