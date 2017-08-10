@@ -194,6 +194,7 @@ set wrap "Wrap lines
 
 " Split panes to right
 set splitright
+set splitbelow
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
