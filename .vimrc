@@ -1,3 +1,5 @@
+" vim latex
+execute pathogen#infect()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 " Author:
@@ -22,6 +24,7 @@
 "    -> Spell checking
 "    -> Misc
 "    -> Helper functions
+"    -> vim-latex
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -271,6 +274,7 @@ imap <C-S-Enter> <C-o>O
 
 " move cursor in insert mode
 inoremap jj <Esc>j 
+inoremap jk <Esc> 
 inoremap kk <Esc>k
 
 " map shell short cut
@@ -438,3 +442,18 @@ endfunction
 " if has("autocmd")
 "   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 "endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-latex
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+" set shellslash
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+
