@@ -1,4 +1,4 @@
-" vim latex
+" vim plug-in manager
 execute pathogen#infect()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
