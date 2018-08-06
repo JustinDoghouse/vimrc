@@ -1,11 +1,6 @@
 " vim latex
-execute pathogen#infect()
+" execute pathogen#infect()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"
-" Author:
-"       phycept
-"       phycept@gmail.com
-"
 " Copied_from: 
 "       Amir Salihefendic
 "       http://amix.dk - amix@amix.dk
