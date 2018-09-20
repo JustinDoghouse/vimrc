@@ -1,11 +1,6 @@
 " vim plug-in manager
 execute pathogen#infect()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"
-" Author:
-"       phycept
-"       phycept@gmail.com
-"
 " Copied_from: 
 "       Amir Salihefendic
 "       http://amix.dk - amix@amix.dk
@@ -14,7 +9,7 @@ execute pathogen#infect()
 "    -> General
 "    -> VIM user interface
 "    -> Colors and Fonts
-"    -> Files and backups
+"    -> Files and backups                       |vimrc-files|
 "    -> Text, tab and indent related
 "    -> Visual mode related
 "    -> Moving around, tabs and buffers
@@ -44,8 +39,8 @@ set autoread
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
+let mapleader = " "
+let g:mapleader = " "
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -53,6 +48,9 @@ nmap <leader>w :w!<cr>
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
+
+" enable mouse
+" set mouse=a
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -165,12 +163,35 @@ set ffs=unix,dos,mac
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
+" => Files and backups              |vimrc-files|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
 set nowb
 set noswapfile
+
+" netrw config: https://shapeshed.com/vim-netrw/
+" change directory browser view
+let g:netrw_liststyle = 3
+" open file in split
+let g:netrw_browse_split = 4
+" width of dir explorer
+let g:netrw_winsize = 25
+" launch dir explor right after enter Vim
+" :autocmd!: Remove ALL autocommands for the current group.
+augroup ProjectDrawer
+  autocmd!
+  autocmd VimEnter * :Vexplore | :wincmd l
+augroup END
+" change the <c-l> way in netrw, https://github.com/christoomey/vim-tmux-navigator/issues/189#issuecomment-362079200
+augroup netrw_mapping
+  autocmd!
+  autocmd filetype netrw call NetrwMapping()
+augroup END
+
+function! NetrwMapping()
+  nnoremap <buffer> <c-l> :wincmd l<cr>
+endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -211,9 +232,9 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
+" not Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+" map <space> /
+" map <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -265,7 +286,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " insert a new-line after the current line by pressing Enter (Shift-Enter for inserting a line before the current line)
 " http://vim.wikia.com/wiki/Insert_newline_without_entering_insert_mode 
-nmap <S-Enter> o<Esc>
+" nmap <S-Enter> o<Esc>
 " nmap <CR> o<Esc>
 
 " new line for insert model
