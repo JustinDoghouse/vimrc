@@ -47,7 +47,7 @@ nmap <leader>w :w!<cr>
 
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
+command! W w !sudo tee % > /dev/null
 
 " enable mouse
 " set mouse=a
@@ -174,15 +174,15 @@ set noswapfile
 " change directory browser view
 let g:netrw_liststyle = 3
 " open file in split
-let g:netrw_browse_split = 4
+let g:netrw_browse_split = 0
 " width of dir explorer
 let g:netrw_winsize = 25
 " launch dir explor right after enter Vim
 " :autocmd!: Remove ALL autocommands for the current group.
-augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore | :wincmd l
-augroup END
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore | :wincmd l
+" augroup END
 " change the <c-l> way in netrw, https://github.com/christoomey/vim-tmux-navigator/issues/189#issuecomment-362079200
 augroup netrw_mapping
   autocmd!
@@ -191,6 +191,9 @@ augroup END
 
 function! NetrwMapping()
   nnoremap <buffer> <c-l> :wincmd l<cr>
+  nnoremap <buffer> <c-j> :wincmd j<cr>
+  nnoremap <buffer> <c-k> :wincmd k<cr>
+  nnoremap <buffer> <c-h> :wincmd h<cr>
 endfunction
 
 
@@ -240,10 +243,15 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 map <silent> <leader><cr> :noh<cr>
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" https://stackoverflow.com/questions/9092982/mapping-c-j-to-something-in-vim
+let g:C_Ctrl_j = 'off'
+let g:C_Ctrl_k = 'off'
+let g:C_Ctrl_l = 'off'
+let g:C_Ctrl_h = 'off'
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
 
 " Close the current buffer
 map <leader>bd :Bclose<cr>:tabclose<cr>gT
@@ -406,11 +414,15 @@ map <leader>pp :setlocal paste!<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"function! CmdLine(str)
+"    exe "menu Foo.Bar :" . a:str
+"    emenu Foo.Bar
+"    unmenu Foo
+"endfunction 
+
 function! CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
-    emenu Foo.Bar
-    unmenu Foo
-endfunction 
+    call feedkeys(":" . a:str)
+endfunction
 
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
