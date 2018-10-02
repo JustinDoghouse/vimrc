@@ -192,9 +192,6 @@ set ai "Auto indent
 set cindent "
 set wrap "Wrap lines
 
-" Split panes to right
-set splitright
-set splitbelow
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -259,6 +256,10 @@ endtry
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Split panes to right
+set splitright
+set splitbelow
 
 " insert a new-line after the current line by pressing Enter (Shift-Enter for inserting a line before the current line)
 " http://vim.wikia.com/wiki/Insert_newline_without_entering_insert_mode 
@@ -374,8 +375,6 @@ map <leader>x :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
-
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
