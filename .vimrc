@@ -9,7 +9,7 @@ execute pathogen#infect()
 "    -> General
 "    -> VIM user interface
 "    -> Colors and Fonts
-"    -> Files and backups
+"    -> Files and backups                       |vimrc-files|
 "    -> Text, tab and indent related
 "    -> Visual mode related
 "    -> Moving around, tabs and buffers
@@ -39,15 +39,18 @@ set autoread
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
+let mapleader = " "
+let g:mapleader = " "
 
 " Fast saving
 nmap <leader>w :w!<cr>
 
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
+command! W w !sudo tee % > /dev/null
+
+" enable mouse
+" set mouse=a
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -160,12 +163,38 @@ set ffs=unix,dos,mac
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
+" => Files and backups              |vimrc-files|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
 set nowb
 set noswapfile
+
+" netrw config: https://shapeshed.com/vim-netrw/
+" change directory browser view
+let g:netrw_liststyle = 3
+" open file in split
+let g:netrw_browse_split = 0
+" width of dir explorer
+let g:netrw_winsize = 25
+" launch dir explor right after enter Vim
+" :autocmd!: Remove ALL autocommands for the current group.
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore | :wincmd l
+" augroup END
+" change the <c-l> way in netrw, https://github.com/christoomey/vim-tmux-navigator/issues/189#issuecomment-362079200
+augroup netrw_mapping
+  autocmd!
+  autocmd filetype netrw call NetrwMapping()
+augroup END
+
+function! NetrwMapping()
+  nnoremap <buffer> <c-l> :wincmd l<cr>
+  nnoremap <buffer> <c-j> :wincmd j<cr>
+  nnoremap <buffer> <c-k> :wincmd k<cr>
+  nnoremap <buffer> <c-h> :wincmd h<cr>
+endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -190,9 +219,6 @@ set ai "Auto indent
 set cindent "
 set wrap "Wrap lines
 
-" Split panes to right
-set splitright
-set splitbelow
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -206,18 +232,23 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
+" not Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+" map <space> /
+" map <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" https://stackoverflow.com/questions/9092982/mapping-c-j-to-something-in-vim
+let g:C_Ctrl_j = 'off'
+let g:C_Ctrl_k = 'off'
+let g:C_Ctrl_l = 'off'
+let g:C_Ctrl_h = 'off'
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
 
 " Close the current buffer
 map <leader>bd :Bclose<cr>:tabclose<cr>gT
@@ -258,9 +289,13 @@ endtry
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
+" Split panes to right
+set splitright
+set splitbelow
+
 " insert a new-line after the current line by pressing Enter (Shift-Enter for inserting a line before the current line)
 " http://vim.wikia.com/wiki/Insert_newline_without_entering_insert_mode 
-nmap <S-Enter> o<Esc>
+" nmap <S-Enter> o<Esc>
 " nmap <CR> o<Esc>
 
 " new line for insert model
@@ -375,16 +410,18 @@ map <leader>x :e ~/buffer.md<cr>
 map <leader>pp :setlocal paste!<cr>
 
 
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"function! CmdLine(str)
+"    exe "menu Foo.Bar :" . a:str
+"    emenu Foo.Bar
+"    unmenu Foo
+"endfunction 
+
 function! CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
-    emenu Foo.Bar
-    unmenu Foo
-endfunction 
+    call feedkeys(":" . a:str)
+endfunction
 
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
