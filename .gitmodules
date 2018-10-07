@@ -1,0 +1,3 @@
+[submodule "/root/.vim/bundle/nginx.vim"]
+	path = /root/.vim/bundle/nginx.vim
+	url = https://github.com/chr4/nginx.vim.git

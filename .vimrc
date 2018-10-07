@@ -1,5 +1,5 @@
-" vim latex
-" execute pathogen#infect()
+" vim plug-in manager
+execute pathogen#infect()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Copied_from: 
 "       Amir Salihefendic
