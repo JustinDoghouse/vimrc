@@ -223,6 +223,21 @@ set ai "Auto indent
 set cindent "
 set wrap "Wrap lines
 
+" python PEP 8 indentation
+" https://realpython.com/vim-and-python-a-match-made-in-heaven/
+au BufNewFile,BufRead *.py
+    \ set softtabstop=4  |
+    \ set textwidth=79  |
+    \ set autoindent  |
+    \ set fileformat=unix  
+
+" web indentation
+" https://realpython.com/vim-and-python-a-match-made-in-heaven/
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2  |
+    \ set softtabstop=2  |
+    \ set shiftwidth=2
+
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
