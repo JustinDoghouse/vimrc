@@ -1,5 +1,10 @@
+if has('python3')
+  silent! python3 1
+endif
 " vim plug-in manager
+
 execute pathogen#infect()
+let g:pymode_python = 'python3'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Copied_from: 
 "       Amir Salihefendic
