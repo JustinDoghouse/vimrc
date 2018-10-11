@@ -57,6 +57,10 @@ command! W w !sudo tee % > /dev/null
 " enable mouse
 " set mouse=a
 
+" silent
+" http://vim.wikia.com/wiki/Avoiding_the_%22Hit_ENTER_to_continue%22_prompts
+:command! -nargs=1 Silent execute ':silent !' . <q-args> . ' &' | execute ':redraw!'
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -453,7 +457,7 @@ function! VisualSelection(direction, extra_filter) range
     if a:direction == 'gv'
         call CmdLine("Ag \"" . l:pattern . "\" " )
     elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
+        call CmdLine("%s" . '/\<'. l:pattern . '\>/')
     endif
 
     let @/ = l:pattern
@@ -508,4 +512,14 @@ endfunction
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
+
+" default pdf
+let g:Tex_DefaultTargetFormat='pdf'
+
+" https://stackoverflow.com/questions/3740609/how-do-i-make-vim-latex-compile-correctly-without-having-to-save
+autocmd FileType tex call Tex_MakeMap('<Leader>ll', ':w<CR>:silent call Tex_RunLaTeX()<CR>', 'n', '<buffer>')
+autocmd FileType tex call Tex_MakeMap('<leader>ll', '<ESC>:w<CR>:silent call Tex_RunLaTeX()<CR>', 'v', '<buffer>')
+
+" silent output
+" map <leader>ll :silent call Tex_RunLaTex()<cr>
 
