@@ -1,4 +1,8 @@
+if has('python3')
+  silent! python3 1
+endif
 " vim plug-in manager
+
 execute pathogen#infect()
 call pathogen#helptags()
 
@@ -21,8 +25,8 @@ call pathogen#helptags()
 "    -> Spell checking
 "    -> Misc
 "    -> Helper functions
-"    -> vim-latex
-"
+"    -> vim-latex                                |vim-latex|
+"    -> python mode  |pymode|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -498,7 +502,7 @@ endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-latex
+" => vim-latex |vim-latex|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
 " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
@@ -519,4 +523,15 @@ autocmd FileType tex call Tex_MakeMap('<leader>ll', '<ESC>:w<CR>:silent call Tex
 
 " silent output
 " map <leader>ll :silent call Tex_RunLaTex()<cr>
+"
+" Disable fold
+" https://stackoverflow.com/questions/3322453/how-can-i-disable-code-folding-in-vim-with-vim-latex
+let Tex_FoldedMisc=""
+let Tex_FoldedSections=""
+let Tex_FoldedEnvironments=""
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => python-mode |pymode|
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:pymode_python = 'python3'
