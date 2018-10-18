@@ -1,5 +1,11 @@
+if has('python3')
+  silent! python3 1
+endif
 " vim plug-in manager
+
 execute pathogen#infect()
+call pathogen#helptags()
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Copied_from: 
 "       Amir Salihefendic
@@ -19,8 +25,8 @@ execute pathogen#infect()
 "    -> Spell checking
 "    -> Misc
 "    -> Helper functions
-"    -> vim-latex
-"
+"    -> vim-latex                                |vim-latex|
+"    -> python mode  |pymode|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -47,10 +53,14 @@ nmap <leader>w :w!<cr>
 
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
+command! W w !sudo tee % > /dev/null
 
 " enable mouse
 " set mouse=a
+
+" silent
+" http://vim.wikia.com/wiki/Avoiding_the_%22Hit_ENTER_to_continue%22_prompts
+:command! -nargs=1 Silent execute ':silent !' . <q-args> . ' &' | execute ':redraw!'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -174,15 +184,15 @@ set noswapfile
 " change directory browser view
 let g:netrw_liststyle = 3
 " open file in split
-let g:netrw_browse_split = 4
+let g:netrw_browse_split = 0
 " width of dir explorer
 let g:netrw_winsize = 25
 " launch dir explor right after enter Vim
 " :autocmd!: Remove ALL autocommands for the current group.
-augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore | :wincmd l
-augroup END
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore | :wincmd l
+" augroup END
 " change the <c-l> way in netrw, https://github.com/christoomey/vim-tmux-navigator/issues/189#issuecomment-362079200
 augroup netrw_mapping
   autocmd!
@@ -193,6 +203,7 @@ function! NetrwMapping()
   nnoremap <buffer> <c-l> :wincmd l<cr>
   nnoremap <buffer> <c-j> :wincmd j<cr>
   nnoremap <buffer> <c-k> :wincmd k<cr>
+  nnoremap <buffer> <c-h> :wincmd h<cr>
 endfunction
 
 
@@ -218,9 +229,21 @@ set ai "Auto indent
 set cindent "
 set wrap "Wrap lines
 
-" Split panes to right
-set splitright
-set splitbelow
+" python PEP 8 indentation
+" https://realpython.com/vim-and-python-a-match-made-in-heaven/
+au BufNewFile,BufRead *.py
+    \ set softtabstop=4  |
+    \ set textwidth=79  |
+    \ set autoindent  |
+    \ set fileformat=unix  
+
+" web indentation
+" https://realpython.com/vim-and-python-a-match-made-in-heaven/
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2  |
+    \ set softtabstop=2  |
+    \ set shiftwidth=2
+
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -242,10 +265,15 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 map <silent> <leader><cr> :noh<cr>
 
 " Smart way to move between windows
-map <C-j> :wincmd j<cr>
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" https://stackoverflow.com/questions/9092982/mapping-c-j-to-something-in-vim
+let g:C_Ctrl_j = 'off'
+let g:C_Ctrl_k = 'off'
+let g:C_Ctrl_l = 'off'
+let g:C_Ctrl_h = 'off'
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
 
 " Close the current buffer
 map <leader>bd :Bclose<cr>:tabclose<cr>gT
@@ -285,6 +313,10 @@ endtry
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Split panes to right
+set splitright
+set splitbelow
 
 " insert a new-line after the current line by pressing Enter (Shift-Enter for inserting a line before the current line)
 " http://vim.wikia.com/wiki/Insert_newline_without_entering_insert_mode 
@@ -403,16 +435,18 @@ map <leader>x :e ~/buffer.md<cr>
 map <leader>pp :setlocal paste!<cr>
 
 
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"function! CmdLine(str)
+"    exe "menu Foo.Bar :" . a:str
+"    emenu Foo.Bar
+"    unmenu Foo
+"endfunction 
+
 function! CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
-    emenu Foo.Bar
-    unmenu Foo
-endfunction 
+    call feedkeys(":" . a:str)
+endfunction
 
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
@@ -424,7 +458,7 @@ function! VisualSelection(direction, extra_filter) range
     if a:direction == 'gv'
         call CmdLine("Ag \"" . l:pattern . "\" " )
     elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
+        call CmdLine("%s" . '/\<'. l:pattern . '\>/')
     endif
 
     let @/ = l:pattern
@@ -468,7 +502,7 @@ endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-latex
+" => vim-latex |vim-latex|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
 " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
@@ -480,3 +514,24 @@ endfunction
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
 
+" default pdf
+let g:Tex_DefaultTargetFormat='pdf'
+
+" https://stackoverflow.com/questions/3740609/how-do-i-make-vim-latex-compile-correctly-without-having-to-save
+autocmd FileType tex call Tex_MakeMap('<Leader>ll', ':w<CR>:silent call Tex_RunLaTeX()<CR>', 'n', '<buffer>')
+autocmd FileType tex call Tex_MakeMap('<leader>ll', '<ESC>:w<CR>:silent call Tex_RunLaTeX()<CR>', 'v', '<buffer>')
+
+" silent output
+" map <leader>ll :silent call Tex_RunLaTex()<cr>
+"
+" Disable fold
+" https://stackoverflow.com/questions/3322453/how-can-i-disable-code-folding-in-vim-with-vim-latex
+let Tex_FoldedMisc=""
+let Tex_FoldedSections=""
+let Tex_FoldedEnvironments=""
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => python-mode |pymode|
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:pymode_python = 'python3'
