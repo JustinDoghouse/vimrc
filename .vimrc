@@ -1,5 +1,7 @@
 " vim plug-in manager
 execute pathogen#infect()
+call pathogen#helptags()
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Copied_from: 
 "       Amir Salihefendic
