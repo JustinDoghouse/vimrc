@@ -1,9 +1,23 @@
-if has('python3')
+if has('python3') || has('python')
   silent! python3 1
 endif
 " vim plug-in manager
 
 execute pathogen#infect()
+
+
+" fix meta-keys which generate <Esc>a .. <Esc>z
+" http://vim.wikia.com/wiki/Fix_meta-keys_that_break_out_of_Insert_mode
+" let c='a'
+" while c <= 'z'
+"   " exec "set <M-".toupper(c).">=\e".toupper(c)
+"   exec "inoremap \e".toupper(c)." <M-".toupper(c).">"
+"   let c = nr2char(1+char2nr(c))
+" endw
+" 
+" map \eL <M-L>
+" map! \eL <M-L>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Copied_from: 
 "       Amir Salihefendic
@@ -237,11 +251,10 @@ au BufNewFile,BufRead *.py
 
 " web indentation
 " https://realpython.com/vim-and-python-a-match-made-in-heaven/
-au BufNewFile,BufRead *.js, *.html, *.css
+au BufNewFile,BufRead *.js
     \ set tabstop=2  |
     \ set softtabstop=2  |
     \ set shiftwidth=2
-
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -528,6 +541,17 @@ let Tex_FoldedMisc=""
 let Tex_FoldedSections=""
 let Tex_FoldedEnvironments=""
 
+" let g:Tex_CompileRule_pdf = 'pdflatex '
+"   \. '-synctex=-1 -src-specials -interaction=nonstopmode $*; '
+"   \. 'pdflatex '
+"   \. '-synctex=-1 -src-specials -interaction=nonstopmode $*'
+
+let g:Tex_MultipleCompileFormats="dvi,pdf"
+
+" You can set the location where Latex-Suite will search for .bib and .bbl files using the |Tex_BIBINPUTS| variable. 
+" http://vim-latex.sourceforge.net/documentation/latex-suite/latex-completion-cite.html
+
+let g:Tex_BIBINPUTS="/Users/yan/Library/texmf/bibtex/bib/"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => python-mode |pymode|
