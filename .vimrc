@@ -5,7 +5,6 @@ endif
 
 execute pathogen#infect()
 
-
 " fix meta-keys which generate <Esc>a .. <Esc>z
 " http://vim.wikia.com/wiki/Fix_meta-keys_that_break_out_of_Insert_mode
 " let c='a'
@@ -17,6 +16,7 @@ execute pathogen#infect()
 " 
 " map \eL <M-L>
 " map! \eL <M-L>
+call pathogen#helptags()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Copied_from: 
