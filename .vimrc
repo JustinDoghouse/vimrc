@@ -4,19 +4,19 @@ endif
 " vim plug-in manager
 
 execute pathogen#infect()
+call pathogen#helptags()
 
 " fix meta-keys which generate <Esc>a .. <Esc>z
 " http://vim.wikia.com/wiki/Fix_meta-keys_that_break_out_of_Insert_mode
-" let c='a'
-" while c <= 'z'
+" let c='A'
+" while c <= 'Z'
 "   " exec "set <M-".toupper(c).">=\e".toupper(c)
 "   exec "inoremap \e".toupper(c)." <M-".toupper(c).">"
 "   let c = nr2char(1+char2nr(c))
 " endw
-" 
-" map \eL <M-L>
-" map! \eL <M-L>
-call pathogen#helptags()
+
+" let g:Tex_AdvancedMath = 1
+" imap \eL <Plug>Tex_LeftRight
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Copied_from: 
@@ -552,6 +552,9 @@ let g:Tex_MultipleCompileFormats="dvi,pdf"
 " http://vim-latex.sourceforge.net/documentation/latex-suite/latex-completion-cite.html
 
 let g:Tex_BIBINPUTS="/Users/yan/Library/texmf/bibtex/bib/"
+
+" view rule
+let g:Tex_ViewRule_pdf = 'open -a Skim'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => python-mode |pymode|
