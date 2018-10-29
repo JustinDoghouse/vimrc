@@ -30,7 +30,7 @@ call pathogen#helptags()
 "    -> Files and backups                       |vimrc-files|
 "    -> Text, tab and indent related
 "    -> Visual mode related
-"    -> Moving around, tabs and buffers
+"    -> Moving around, tabs and buffers         |buffer|
 "    -> Status line
 "    -> Editing mappings
 "    -> vimgrep searching and cope displaying
@@ -74,6 +74,9 @@ command! W w !sudo tee % > /dev/null
 " http://vim.wikia.com/wiki/Avoiding_the_%22Hit_ENTER_to_continue%22_prompts
 :command! -nargs=1 Silent execute ':silent !' . <q-args> . ' &' | execute ':redraw!'
 
+" copy
+set clipboard=unnamed
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -91,7 +94,7 @@ source $VIMRUNTIME/menu.vim
 set wildmenu
 
 " Ignore compiled files
-set wildignore=*.o,*~,*.pyc
+set wildignore=*.o,*~,*.pyc,*.aux,*.dvi,*.pdf
 if has("win16") || has("win32")
     set wildignore+=.git\*,.hg\*,.svn\*
 else
@@ -104,8 +107,6 @@ set ruler
 " Height of the command bar
 set cmdheight=2
 
-" A buffer becomes hidden when it is abandoned
-set hid
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -192,6 +193,9 @@ set nobackup
 set nowb
 set noswapfile
 
+" autowrite: https://stackoverflow.com/questions/1313323/vim-write-back-my-file-on-each-key-press
+autocmd TextChanged,TextChangedI <buffer> write
+
 " netrw config: https://shapeshed.com/vim-netrw/
 " change directory browser view
 let g:netrw_liststyle = 3
@@ -208,7 +212,7 @@ let g:netrw_winsize = 25
 " change the <c-l> way in netrw, https://github.com/christoomey/vim-tmux-navigator/issues/189#issuecomment-362079200
 augroup netrw_mapping
   autocmd!
-  autocmd filetype netrw call NetrwMapping()
+  autocmd Filetype netrw call NetrwMapping()
 augroup END
 
 function! NetrwMapping()
@@ -266,11 +270,10 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers
+" => Moving around, tabs, windows and buffers       |buffer|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" not Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-" map <space> /
-" map <c-space> ?
+" A buffer becomes hidden when it is abandoned
+set hidden
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -286,6 +289,7 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
+
 " Close the current buffer
 map <leader>bd :Bclose<cr>:tabclose<cr>gT
 
@@ -294,6 +298,11 @@ map <leader>ba :bufdo bd<cr>
 
 map <leader>l :bnext<cr>
 map <leader>h :bprevious<cr>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+" https://joshldavis.com/2014/04/05/vim-tab-madness-buffers-vs-tabs/
+nmap <leader>bq :bp <BAR> bd #<CR>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
@@ -529,8 +538,8 @@ let g:tex_flavor='latex'
 let g:Tex_DefaultTargetFormat='pdf'
 
 " https://stackoverflow.com/questions/3740609/how-do-i-make-vim-latex-compile-correctly-without-having-to-save
-autocmd FileType tex call Tex_MakeMap('<Leader>ll', ':w<CR>:silent call Tex_RunLaTeX()<CR>', 'n', '<buffer>')
-autocmd FileType tex call Tex_MakeMap('<leader>ll', '<ESC>:w<CR>:silent call Tex_RunLaTeX()<CR>', 'v', '<buffer>')
+" autocmd FileType tex call Tex_MakeMap('<Leader>ll', ':w<CR>:silent call Tex_RunLaTeX()<CR>', 'n', '<buffer>')
+" autocmd FileType tex call Tex_MakeMap('<leader>ll', '<ESC>:w<CR>:silent call Tex_RunLaTeX()<CR>', 'v', '<buffer>')
 
 " silent output
 " map <leader>ll :silent call Tex_RunLaTex()<cr>
@@ -556,7 +565,18 @@ let g:Tex_BIBINPUTS="/Users/yan/Library/texmf/bibtex/bib/"
 " view rule
 let g:Tex_ViewRule_pdf = 'open -a Skim'
 
+" use latexmk
+let g:Tex_CompileRule_pdf = "latexmk --synctex=-1 -src-specials -interaction=nonstopmode -bibtex -pdf $*"
+
+" ignore wranings
+" http://vim-latex.sourceforge.net/documentation/latex-suite/customizing-compiling.html#Tex_IgnoredWarnings
+" let  g:Tex_IgnoreLevel=8
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => python-mode |pymode|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:pymode_python = 'python3'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => k
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
