@@ -6,10 +6,6 @@
 	path = bundle/vim-latex
 	url = https://github.com/vim-latex/vim-latex.git
 
-[submodule "bundle/python-mode"]
-	path = bundle/python-mode
-	url = https://github.com/python-mode/python-mode.git
-
 [submodule "bundle/ctrlp"]
 	path = bundle/ctrlp
 	url = https://github.com/kien/ctrlp.vim.git
