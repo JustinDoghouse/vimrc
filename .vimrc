@@ -2,9 +2,8 @@ if has('python3') || has('python')
   silent! python3 1
 endif
 " vim plug-in manager
-
 execute pathogen#infect()
-call pathogen#helptags()
+" call pathogen#helptags()
 
 " fix meta-keys which generate <Esc>a .. <Esc>z
 " http://vim.wikia.com/wiki/Fix_meta-keys_that_break_out_of_Insert_mode
@@ -576,6 +575,7 @@ let g:Tex_CompileRule_pdf = "latexmk --synctex=-1 -src-specials -interaction=non
 " => python-mode |pymode|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:pymode_python = 'python3'
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => k
