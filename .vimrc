@@ -1,6 +1,7 @@
-if has('python3') || has('python')
-  silent! python3 1
-endif
+" if has('python3') || has('python')
+"   silent! python3 1
+" endif
+
 " vim plug-in manager
 execute pathogen#infect()
 " call pathogen#helptags()
@@ -575,7 +576,7 @@ let g:Tex_CompileRule_pdf = "latexmk --synctex=-1 -src-specials -interaction=non
 " => python-mode |pymode|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:pymode_python = 'python3'
-
+let g:pymode_run_bind = '<leader>ll'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => k
