@@ -3,8 +3,6 @@
 " endif
 
 " vim plug-in manager
-execute pathogen#infect()
-" call pathogen#helptags()
 
 " fix meta-keys which generate <Esc>a .. <Esc>z
 " http://vim.wikia.com/wiki/Fix_meta-keys_that_break_out_of_Insert_mode
@@ -41,6 +39,11 @@ execute pathogen#infect()
 "    -> python mode  |pymode|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+call plug#begin()
+Plug 'vim-latex/vim-latex'
+Plug 'kien/ctrlp.vim'
+Plug 'chr4/nginx.vim'
+call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General

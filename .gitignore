@@ -1,3 +1,5 @@
 .vimrc_backup
 .netrwhist
 .netrwbook
+
+bundle/*
