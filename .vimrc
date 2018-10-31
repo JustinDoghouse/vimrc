@@ -2,8 +2,6 @@
 "   silent! python3 1
 " endif
 
-" vim plug-in manager
-
 " fix meta-keys which generate <Esc>a .. <Esc>z
 " http://vim.wikia.com/wiki/Fix_meta-keys_that_break_out_of_Insert_mode
 " let c='A'
@@ -39,10 +37,18 @@
 "    -> python mode  |pymode|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugin 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
+"Plug 'Valloric/YouCompleteMe', {
+"			\'do': 'CXX=clang++ CC=clang CMAKE_CXX_FLAGS=-Ofast python install.py --clang-completer --system-libclang'}
 Plug 'vim-latex/vim-latex'
 Plug 'kien/ctrlp.vim'
 Plug 'chr4/nginx.vim'
+Plug 'xolox/vim-misc'                 " Required by vim-easytags
+Plug 'xolox/vim-easytags'             " Tag 自动生成和高亮
+" Plug 'jlanzarotta/bufexplorer'
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -578,9 +584,12 @@ let g:Tex_CompileRule_pdf = "latexmk --synctex=-1 -src-specials -interaction=non
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => python-mode |pymode|
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:pymode_python = 'python3'
-let g:pymode_run_bind = '<leader>ll'
+" let g:pymode_python = 'python3'
+" let g:pymode_run_bind = '<leader>ll'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => k
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:easytags_async=1
+let g:easytags_dynamic_files=1 " 0 for always at ~/ ; 1 for priority at ./ ; 2 for always at ./
+
